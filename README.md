@@ -1,16 +1,16 @@
-# Semantic Resume–Job Matching with Sentence-BERT
+# Resume–Job Matching via Pseudo-Labelled Sentence-BERT Fine-Tuning
 
-This project explores semantic matching between resumes and job postings using a fine-tuned Sentence-BERT bi-encoder.
+This project improves semantic matching between resumes and job postings by fine-tuning Sentence-BERT using high-confidence pseudo-labels.
 
-Starting from a pretrained SBERT model, we generate pseudo-labels via embedding similarity and word-level heuristics, and fine-tune all transformer layers using a contrastive loss. The resulting model learns task-specific representations that better align candidate skills with job requirements compared to a frozen baseline.
+We first embed all resumes and job descriptions using a pretrained Sentence-BERT model. Candidate pairs are selected based on embedding proximity and further filtered using a word-level keyword overlap heuristic. Pairs that are very close with strong keyword overlap are treated as positive examples, while distant pairs with low overlap form negative examples.
 
-**Key components**
-- Sentence-BERT bi-encoder architecture
-- Pseudo-labelling based on embedding proximity and keyword overlap
-- Contrastive fine-tuning for binary relevance classification
-- Embedding-space evaluation and visualisation
+Using these high-confidence positive and negative pairs, we fully fine-tune a Sentence-BERT bi-encoder with contrastive learning. The resulting model learns a task-specific embedding space that places truly matching resumes and job postings closer together than a standard pretrained Sentence-BERT.
 
-**Data**
-Publicly available Kaggle datasets of resumes and job postings.
+**Key ideas**
+- Pretrained Sentence-BERT as an embedding baseline
+- Pseudo-labelling via embedding similarity + keyword overlap heuristics
+- Fine-tuning on high-confidence positives and negatives
+- Improved clustering of semantically matching profiles
 
-This repository contains the full Jupyter notebook used for data processing, model training, and evaluation.
+All experiments and evaluations are contained in the Jupyter notebook.
+
